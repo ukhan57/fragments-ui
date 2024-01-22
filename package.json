@@ -13,9 +13,13 @@
   "author": "Umar Khan",
   "license": "UNLICENSED",
   "devDependencies": {
+    "buffer": "^6.0.3",
     "parcel": "^2.11.0"
   },
   "dependencies": {
-    "aws-amplify": "^5.0.0"
+    "aws-amplify": "^5.0.0",
+    "pino": "^8.17.2",
+    "pino-http": "^9.0.0",
+    "pino-pretty": "^10.3.1"
   }
 }

@@ -132,3 +132,6 @@ dist
 #Parcel generated build files
 .parcel-cache/
 dist/
+
+# Don't include .env, which might have sensitive information
+.env

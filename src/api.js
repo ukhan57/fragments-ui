@@ -41,7 +41,7 @@ export async function postUserFragment(user, fragmentText) {
     const res = await fetch(`${apiUrl}/v1/fragments`, {
       method: 'POST',
       headers: {
-        Authorization: user.authorizationHeaders().Authorization,
+        Authorization: user.authorizationHeaders(),
         "Content-Type" : "text/plain",
       },
       body: fragmentText,

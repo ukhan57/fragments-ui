@@ -28,7 +28,9 @@ async function init() {
       return;
     }
     try {
-      const postFragment = postUserFragment(user, fragmentText);
+      // const {location} = await postUserFragment(user, fragmentText);
+      const postFragment = await postUserFragment(user, fragmentText);
+      // console.log('Location of the posted fragment: ', location);
       alert('Fragment created and posted successfully!');
     } catch (error) {
       console.error('Error posting fragment: ', error);

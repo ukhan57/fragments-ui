@@ -27,3 +27,21 @@ export async function getUserFragments(user) {
     console.error('Unable to call GET /v1/fragment', { err });
   }
 }
+
+export async function postUserFragment(user, fragmentText) {
+  console.log('Posting user fragment');
+  try {
+    const res = await fetch(`${apiUrl}/v1/fragments`, {
+      method: 'POST',
+      headers: user.authorizationHeaders('text/plain'),
+      body: fragmentText,
+    });
+    if (!res.ok) {
+      throw new Error(`${res.status} ${res.statusText}`);
+    }
+    console.log('Successfully posted fragment data');
+  } catch (error) {
+    console.error('Unable to call POST /v1/fragment', { error });
+    throw error;
+  }
+}

@@ -4,13 +4,33 @@ import { Auth, getUser } from './auth';
 
 // Modifications to src/app.js
 
-import { getUserFragments } from './api';
+import { getUserFragments, postUserFragment } from './api';
 
 async function init() {
   // Get our UI elements
   const userSection = document.querySelector('#user');
   const loginBtn = document.querySelector('#login');
   const logoutBtn = document.querySelector('#logout');
+
+  // For post request
+  const postFragmentBtn = document.querySelector('#postFragmentBtn');
+
+  postFragmentBtn.onclick = async () => {
+    const fragmentInput = document.querySelector('#fragmentInput');
+    const fragmentText = fragmentInput.value;
+    if (fragmentText.trim() == '') {
+      alert('Please enter some text for the fragment');
+    }
+    try {
+      const user = await getUser();
+      const postFragment = postUserFragment(user, fragmentText);
+      // await postUserFragment(user, fragmentText);
+      alert('Fragment created and posted successfully');
+    } catch (error) {
+      console.error('Error posting fragment: ', error);
+      alert('Error posting fragment. Please try again.');
+    }
+  };
 
   // Wire up event handlers to deal with login and logout.
   loginBtn.onclick = () => {

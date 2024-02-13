@@ -20,12 +20,16 @@ async function init() {
     const fragmentText = fragmentInput.value;
     if (fragmentText.trim() == '') {
       alert('Please enter some text for the fragment');
+      return;
+    }
+    const user = await getUser();
+    if (!user) {
+      alert('User is not authenticated to post, please Login first!');
+      return;
     }
     try {
-      const user = await getUser();
       const postFragment = postUserFragment(user, fragmentText);
-      // await postUserFragment(user, fragmentText);
-      alert('Fragment created and posted successfully');
+      alert('Fragment created and posted successfully!');
     } catch (error) {
       console.error('Error posting fragment: ', error);
       alert('Error posting fragment. Please try again.');
@@ -65,7 +69,7 @@ async function init() {
   loginBtn.disabled = true;
 
   // Do an authenticated request to the fragments API server and log the result
-  const userFragments = await getUserFragments(user);   
+  const userFragments = await getUserFragments(user);  
 
   // TODO: Later in the course, we will show all the user's fragments in the HTML...   
 }

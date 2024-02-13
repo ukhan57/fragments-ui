@@ -50,7 +50,7 @@ export async function postUserFragment(user, fragmentText) {
       throw new Error(`${res.status} ${res.statusText}`);
     }
     const data = await res.json();
-    const location = res.headers.get('Location');
+    const location = res.headers.get.location;
     console.log('Location: ', location);
     console.log('Successfully posted fragment data', { data });
     return { data, location };

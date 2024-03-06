@@ -139,4 +139,6 @@ dist/
 # Dont include these as they will be rebuilt
 node_modules
 .eslintrc.js
-.prettier*
+.prettierignore
+.prettierrc
+.vscode/

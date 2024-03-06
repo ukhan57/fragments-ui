@@ -135,3 +135,8 @@ dist/
 
 # Don't include .env, which might have sensitive information
 .env
+
+# Dont include these as they will be rebuilt
+node_modules
+.eslintrc.js
+.prettier*

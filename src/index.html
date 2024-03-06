@@ -10,17 +10,24 @@
     <h1>Fragments UI</h1>
     <section hidden id="user">
       <h2>Hello <span class="username"></span>!</h2>
+
+      <!-- For current fragments -->
+      <h3>Current User Fragments</h3>
+      <p>
+        <button type="button" id="getFragments">GET fragments</button>
+        <button type="button" id="getExpandedFragments">GET expanded fragments</button>
+        <pre id="currentFragment"></pre>
+      </p>
+
       <!-- For post request -->
-    <h3>Write something below to post a fragment!</h3>
-    <div class="mb-3">
-      <input type="text" class="form-control" id="fragmentInput" placeholder="Type Something here"> <br /><br />
-      <button type="button" id="postFragmentBtn" class="btn btn-outline-secondary">Submit</button>
-    </div>
+      <h3>Write something below to post a fragment!</h3>
+      <div class="mb-3">
+        <input type="text" class="form-control" id="fragmentInput" placeholder="Type Something here"> <br /><br />
+        <button type="button" id="postFragmentBtn" class="btn btn-outline-secondary">Submit</button>
+      </div>
     </section>
-    <div>
-      <h4>To perfrom the GET /fragment request, simply refresh the page and look in the console.</h4>
-    </div>
     <section>
+      <br />
       <nav><button id="login">Login</button> <button id="logout">Logout</button></nav>
     </section>
   </body>

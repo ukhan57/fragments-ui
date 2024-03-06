@@ -8,6 +8,8 @@
   </head>
   <body>
     <h1>Fragments UI</h1>
+
+    <!-- This section will only be available once the user has successfully logged in -->
     <section hidden id="user">
       <h2>Hello <span class="username"></span>!</h2>
 
@@ -36,11 +38,16 @@
           </select>
           <br /><br />
           <label for="fragmentInput">Write something below to POST</label>
-          <input type="text" class="form-control" id="fragmentInput" placeholder="Type Something here"> <br /><br />
+          <input type="text" class="form-control" id="fragmentInput" placeholder="Type Something here">
+          <br /><br />
           <button type="button" id="postFragmentBtn" class="btn btn-outline-secondary">Submit</button>
+          <br /><br />
+          <label for="fragLocation">Posted fragment Location</label>
+          <input id="fragLocation" type="text" readonly placeholder="generated after POST request is made">
         </p>
     </section>
 
+    <!-- This section is for authentication login/logout -->
     <section>
       <br />
       <nav><button id="login">Login</button> <button id="logout">Logout</button></nav>

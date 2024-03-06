@@ -99,8 +99,9 @@ async function init() {
       return;
     }
     try {
-      await postUserFragment(user, fragmentText, fragType);
+      let fragData = await postUserFragment(user, fragmentText, fragType);
       alert('Fragment created and posted successfully!');
+      document.getElementById('fragLocation').value = apiUrl + '/' + fragData.location;
     } catch (error) {
       console.error('Error posting fragment: ', error);
       alert('Error posting fragment. Please try again.');

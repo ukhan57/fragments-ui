@@ -55,14 +55,14 @@ export async function getExpandedUserFragments(user, expand) {
   }
 }
 
-export async function postUserFragment(user, fragmentText) {
+export async function postUserFragment(user, fragmentText, fragType) {
   console.log('Posting user fragment');
   try {
     const res = await fetch(`${apiUrl}/v1/fragments`, {
       method: 'POST',
       headers: {
         Authorization: user.authorizationHeaders().Authorization,
-        "Content-Type" : "text/plain",
+        "Content-Type": fragType, 
       },
       body: fragmentText,
     });
@@ -70,10 +70,8 @@ export async function postUserFragment(user, fragmentText) {
       throw new Error(`${res.status} ${res.statusText}`);
     }
     const data = await res.json();
-    const location = res.headers.get('Location');
-    console.log('Location: ', location);
     console.log('Successfully posted fragment data', { data });
-    return { data, location };
+    return { data };
   } catch (error) {
     console.error('Unable to call POST /v1/fragment', { error });
     throw error;

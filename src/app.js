@@ -87,6 +87,7 @@ async function init() {
   const postFragmentBtn = document.querySelector('#postFragmentBtn');
   postFragmentBtn.onclick = async () => {
     const fragmentInput = document.querySelector('#fragmentInput');
+    const fragType = document.querySelector('#fragmentType').value;
     const fragmentText = fragmentInput.value;
     if (fragmentText.trim() == '') {
       alert('Please enter some text for the fragment');
@@ -98,7 +99,7 @@ async function init() {
       return;
     }
     try {
-      await postUserFragment(user, fragmentText);
+      await postUserFragment(user, fragmentText, fragType);
       alert('Fragment created and posted successfully!');
     } catch (error) {
       console.error('Error posting fragment: ', error);

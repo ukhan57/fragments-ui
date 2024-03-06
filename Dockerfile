@@ -53,9 +53,6 @@ FROM nginx:1.23.0-alpine@sha256:20a1077e25510e824d6f9ce7af07aa02d86536848ddab3e4
 # Copying the build site from the previous stage
 COPY --from=build /build/dist /usr/share/nginx/html
 
-# Explicitly copying the env variables into the nginx image
-COPY .env /usr/share/nginx/html
-
 # Using default nginx port 
 EXPOSE 80
 

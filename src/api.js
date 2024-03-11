@@ -71,8 +71,14 @@ export async function postUserFragment(user, fragmentText, fragType) {
     }
     const data = await res.json();
     const location = data.fragment.id;
+
+    // Set the location header
+    res.setHeader('Location: ', `${apiUrl}/v1/fragments/${location}`);
+
+    // Consoling the locations and output
     console.log("Posted fragment location: ", `${apiUrl}/v1/fragments/${location}`);
     console.log('Successfully posted fragment data', { data });
+
     return { data, location };
   } catch (error) {
     console.error('Unable to call POST /v1/fragment', { error });

@@ -71,6 +71,7 @@ export async function postUserFragment(user, fragmentText, fragType) {
     }
     const data = await res.json();
     const location = data.fragment.id;
+    console.log("Posted fragment location: ", `${apiUrl}/v1/fragments/${location}`);
     console.log('Successfully posted fragment data', { data });
     return { data, location };
   } catch (error) {

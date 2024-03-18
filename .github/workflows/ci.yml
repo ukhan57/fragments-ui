@@ -28,7 +28,7 @@ jobs:
   # Build and push our docker files to docker hub registery
   docker-hub:
     name: Build and Push to Docker Hub
-    # Don't bother running this job unless the other three all pass
+    # Don't bother running this job unless the other pass
     needs: [dockerfile-lint]
     runs-on: ubuntu-latest
     steps:

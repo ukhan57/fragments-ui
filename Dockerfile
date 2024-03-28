@@ -8,6 +8,25 @@ FROM node:20.11.1-alpine@sha256:c0a3badbd8a0a760de903e00cedbca94588e609299820557
 LABEL maintainer="Umar Khan <ukhan57@myseneca.ca>"
 LABEL description="Fragments-ui Web server"
 
+# fragments microservice API URL (make sure this is the right port for you)
+ARG API_URL=http://fragments-lb-1729897819.us-east-1.elb.amazonaws.com
+
+# AWS Amazon Cognito Client App ID (use your Client App ID)
+ARG AWS_COGNITO_POOL_ID=us-east-1_8zFUg3al8
+
+# AWS Amazon Cognito Client App ID (use your Client App ID)
+ARG AWS_COGNITO_CLIENT_ID=43lnrn9cgf4sd4o71e9p5h34n6
+
+# AWS Amazon Cognito Host UI domain (use your domain only, not the full URL)
+ARG AWS_COGNITO_HOSTED_UI_DOMAIN=ukhan-fragments.auth.us-east-1.amazoncognito.com
+
+# OAuth Sign-In Redirect URL (use the port for your fragments-ui web app)
+ARG OAUTH_SIGN_IN_REDIRECT_URL=http://localhost:1234
+
+# OAuth Sign-Out Redirect URL (use the port for your fragments-ui web app)
+ARG OAUTH_SIGN_OUT_REDIRECT_URL=http://localhost:1234
+
+
 # Reduce npm spam when installing within Docker
 # https://docs.npmjs.com/cli/v8/using-npm/config#loglevel
 ENV NPM_CONFIG_LOGLEVEL=warn

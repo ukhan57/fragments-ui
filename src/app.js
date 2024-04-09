@@ -15,6 +15,12 @@ import { Auth, getUser } from './auth';
 
 import { getUserFragments, postUserFragment, getExpandedUserFragments } from './api';
 
+async function updateUserFragments(user) {
+  const userFragments = await getUserFragments(user);
+  // To show the fragment of user after login
+  document.getElementById('currentFragment').innerText = JSON.stringify(userFragments, null, 4);
+}
+
 async function init() {
   // Get our UI elements
   const userSection = document.querySelector('#user');
@@ -58,6 +64,9 @@ async function init() {
   // Disable the Login button
   loginBtn.disabled = true; 
 
+  // Fetch and display the user's fragment
+  await updateUserFragments(user);
+
   // TODO: Later in the course, we will show all the user's fragments in the HTML...   
   // For GET /v1/fragments
   const getFragBtn = document.querySelector('#getFragments');
@@ -65,6 +74,7 @@ async function init() {
     try {
       let userFrag = await getUserFragments(user);
       document.getElementById('currentFragment').innerText = JSON.stringify(userFrag, null, 4);
+      document.getElementById('fragLocation').value = '';
     } catch (error) {
       console.log("Error fetching the user fragment.");
       alert("Something went wrong while fetching the user fragament(s), please try again!")
@@ -77,6 +87,7 @@ async function init() {
     try {
       let userFrag = await getExpandedUserFragments(user, 1);
       document.getElementById('currentFragment').innerText = JSON.stringify(userFrag, null, 4);
+      document.getElementById('fragLocation').value = '';
     } catch (error) {
       console.log("Error fetching the expanded user fragment");
       alert("Something went wrong while fetching the expanded user fragament(s), please try again!")
@@ -101,6 +112,8 @@ async function init() {
     try {
       let fragData = await postUserFragment(user, fragmentText, fragType);
       alert('Fragment created and posted successfully!');
+      fragmentInput.value = '';
+      await updateUserFragments(user);
       document.getElementById('fragLocation').value = apiUrl + '/' + fragData.location;
     } catch (error) {
       console.error('Error posting fragment: ', error);

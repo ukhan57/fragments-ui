@@ -13,7 +13,7 @@ import { Auth, getUser } from './auth';
 
 // Modifications to src/app.js
 
-import { getUserFragments, postUserTypedFragment, getExpandedUserFragments, postUserSelectedFragment } from './api';
+import { getUserFragments, postUserTypedFragment, getExpandedUserFragments, postUserSelectedFragment, getFragmentWithId } from './api';
 
 async function updateUserFragments(user) {
   const userFragments = await getUserFragments(user);
@@ -75,6 +75,8 @@ async function init() {
       let userFrag = await getUserFragments(user);
       document.getElementById('currentFragment').innerText = JSON.stringify(userFrag, null, 4);
       document.getElementById('fragLocation').value = '';
+      document.getElementById('currentFragmentWithId').innerText = '';
+      document.getElementById('fragmentId').value = '';
     } catch (error) {
       console.log("Error fetching the user fragment.");
       alert("Something went wrong while fetching the user fragament(s), please try again!")
@@ -88,9 +90,26 @@ async function init() {
       let userFrag = await getExpandedUserFragments(user, 1);
       document.getElementById('currentFragment').innerText = JSON.stringify(userFrag, null, 4);
       document.getElementById('fragLocation').value = '';
+      document.getElementById('currentFragmentWithId').innerText = '';
+      document.getElementById('fragmentId').value = '';
     } catch (error) {
       console.log("Error fetching the expanded user fragment");
       alert("Something went wrong while fetching the expanded user fragament(s), please try again!")
+    }
+  }
+
+  // For GET /v1/fragments/:id
+  const getFragmentIdBtn = document.querySelector('#getFragmentIdBtn')
+  getFragmentIdBtn.onclick = async () => {
+    const fragmentId = document.querySelector('#fragmentId');
+    const fragmentIdText = fragmentId.value;
+    try {
+      let userFrag = await getFragmentWithId(user, fragmentIdText);
+      document.getElementById('currentFragmentWithId').innerText = JSON.stringify(userFrag, null, 4);
+      document.getElementById('fragLocation').value = '';      
+    } catch (error) {
+      console.log("Error fetching the user fragment data");
+      alert("Something went wrong while fetching the user fragament(s) data, please try again!")
     }
   }
 

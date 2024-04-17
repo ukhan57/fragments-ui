@@ -55,7 +55,38 @@ export async function getExpandedUserFragments(user, expand) {
   }
 }
 
-// If the user decides to type the fragment and post
+// Get fragment data with id
+export async function getFragmentWithId(user, fragmentId) {
+  console.log('Requesting user fragments data...');
+  try {
+    const res = await fetch(`${apiUrl}/v1/fragments/${fragmentId}`, {
+      // Generate headers with the proper Authorization bearer token to pass.
+      // We are using the `authorizationHeaders()` helper method we defined
+      // earlier, to automatically attach the user's ID token.
+      headers: {
+        Authorization: user.authorizationHeaders().Authorization,
+      },
+    });
+    if (!res.ok) {
+      throw new Error(`${res.status} ${res.statusText}`);
+    }
+    // Check the content type of the response
+    const contentType = res.headers.get('content-type');
+    if (contentType && contentType.includes('application/json')) {
+      // Parse and return JSON response
+      const data = await res.json();
+      return data;
+    } else {
+      // Handle plain text response
+      const text = await res.text();
+      return text;
+    }
+  } catch (err) {
+    console.error('Unable to call GET /v1/fragment/:id', { err });
+  }
+}
+
+// POST - If the user decides to type the fragment and post
 export async function postUserTypedFragment(user, fragmentText, fragType) {
   console.log('Posting user fragment', fragmentText);
   try {
@@ -84,7 +115,7 @@ export async function postUserTypedFragment(user, fragmentText, fragType) {
   }
 }
 
-// If the user wants to select a file/image to post
+// POST - If the user wants to select a file/image to post
 export async function postUserSelectedFragment(user, selectedFile, fragType) {
   console.log('Posting user fragment', selectedFile);
   try {

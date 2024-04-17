@@ -17,14 +17,24 @@
       <h3>Current User Fragments</h3>
       <p>
         <button type="button" id="getFragments">GET fragments</button>
-        <button type="button" id="getExpandedFragments">GET expanded fragments</button>
+        <button type="button" id="getExpandedFragments">GET fragments Meta-Data</button>
         <pre id="currentFragment"></pre>
+      </p>
+
+      <h3>To view fragment data, enter the fragment id</h3>
+      <p>
+        <button type="button" id="getFragmentIdBtn">GET fragment's data</button>
+        <div>
+          <input type="text" class="form-control" id="fragmentId" placeholder="Type fragment id here">
+          <br /><br />
+          <pre id="currentFragmentWithId"></pre>
+        </div>
       </p>
       
       <!-- For POST request -->
       <h3>Post a fragment</h3>
         <p>
-          <label for="fragmentType">Fragment Type</label>
+          <label for="fragmentType">Choose The Correct Fragment Type</label>
           <select name="fragmentType" id="fragmentType">
           <optgroup label="Text">
             <option value="text/plain">text/plain</option>

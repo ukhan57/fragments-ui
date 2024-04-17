@@ -177,3 +177,26 @@ export async function putUserFragment(user, updatedText, updatedID) {
     throw error;
   }
 }
+
+// To DELETE a fragment with id
+export async function deleteUseFragment(user, deleteFragId) {
+  console.log('Deleting user fragments data...');
+  try {
+    const res = await fetch(`${apiUrl}/v1/fragments/${deleteFragId}`, {
+      method: 'DELETE',
+      // Generate headers with the proper Authorization bearer token to pass.
+      // We are using the `authorizationHeaders()` helper method we defined
+      // earlier, to automatically attach the user's ID token.
+      headers: user.authorizationHeaders(),
+    });
+    if (!res.ok) {
+      throw new Error(`${res.status} ${res.statusText}`);
+    }
+    const data = await res.json();
+    console.log('Successfully deleted user fragments data', { data });
+    return data;
+  } catch (err) {
+    console.error('Unable to call DELETE /v1/fragment', { err });
+    return err;
+  }
+}

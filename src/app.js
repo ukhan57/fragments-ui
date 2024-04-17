@@ -13,7 +13,7 @@ import { Auth, getUser } from './auth';
 
 // Modifications to src/app.js
 
-import { getUserFragments, postUserTypedFragment, getExpandedUserFragments, postUserSelectedFragment, getFragmentWithId, putUserFragment } from './api';
+import { getUserFragments, postUserTypedFragment, getExpandedUserFragments, postUserSelectedFragment, getFragmentWithId, putUserFragment, deleteUseFragment } from './api';
 
 async function updateUserFragments(user) {
   const userFragments = await getUserFragments(user);
@@ -190,6 +190,28 @@ async function init() {
     } catch (err) {
       console.error('Error updating fragment: ', {err});
       alert('Error updating user fragment. Please try again.')
+    }
+  }
+
+  // To DELETE /v1/fragments/:id
+  const deleteFragBtn = document.querySelector('#deleteFragBtn');
+  deleteFragBtn.onclick = async () => {
+    const deleteFragId = document.querySelector('#deleteFragId').value;
+    if (!deleteFragId) {
+      alert('Please enter a fragment ID to delete.');
+      return;
+    }
+    deleteFragBtn.disabled = true;
+    try {
+      const deleteFragment = await deleteUseFragment(user, deleteFragId);
+      alert('Successfully deleted user fragment');
+      await updateUserFragments(user);
+      document.querySelector('#deleteFragId').value = '';
+    } catch (error) {
+      console.error('Error deleting fragment: ', {error});
+      alert('Error deleting user fragment. Please try again.')
+    } finally {
+      deleteFragBtn.disabled = false;
     }
   }
 }

@@ -35,15 +35,27 @@
           <optgroup label="JSON">
             <option value="application/json">application/json</option>
           </optgroup>
+          <optgroup label="Image">
+            <option value="image/png">image/png</option>
+            <option value="image/jpeg">image/jpeg</option>
+            <option value="image/webp">image/webp</option>
+            <option value="image/avif">image/avif</option>
+            <option value="image/gif">image/gif</option>
+          </optgroup>
           </select>
           <br /><br />
-          <label for="fragmentInput">Write something below to POST</label>
+          <!-- For typing -->
+          <label for="fragmentInput">Write something below or choose from files to POST</label>
           <input type="text" class="form-control" id="fragmentInput" placeholder="Type Something here">
-          <br /><br />
+          <!-- For selecting a file -->
+          <div class="input-group mb-3">
+            <input type="file" class="form-control" id="selectedFile" placeholder="No file chosen.">
+          </div>
+          <br />
           <button type="button" id="postFragmentBtn" class="btn btn-outline-secondary">Submit</button>
           <br /><br />
           <label for="fragLocation">Posted fragment Location</label>
-          <input id="fragLocation" type="text" readonly placeholder="generated after POST request is made">
+          <input id="fragLocation" type="text" readonly placeholder="Generated after POST request is made">
         </p>
     </section>
 

@@ -13,7 +13,7 @@ import { Auth, getUser } from './auth';
 
 // Modifications to src/app.js
 
-import { getUserFragments, postUserFragment, getExpandedUserFragments } from './api';
+import { getUserFragments, postUserTypedFragment, getExpandedUserFragments, postUserSelectedFragment } from './api';
 
 async function updateUserFragments(user) {
   const userFragments = await getUserFragments(user);
@@ -97,27 +97,49 @@ async function init() {
   // For POST /v1/fragmens
   const postFragmentBtn = document.querySelector('#postFragmentBtn');
   postFragmentBtn.onclick = async () => {
+    const selectedFile = document.querySelector('#selectedFile')
     const fragmentInput = document.querySelector('#fragmentInput');
     const fragType = document.querySelector('#fragmentType').value;
     const fragmentText = fragmentInput.value;
-    if (fragmentText.trim() == '') {
-      alert('Please enter some text for the fragment');
-      return;
-    }
-    const user = await getUser();
-    if (!user) {
-      alert('User is not authenticated to post, please Login first!');
-      return;
-    }
-    try {
-      let fragData = await postUserFragment(user, fragmentText, fragType);
-      alert('Fragment created and posted successfully!');
-      fragmentInput.value = '';
-      await updateUserFragments(user);
-      document.getElementById('fragLocation').value = apiUrl + '/' + fragData.location;
-    } catch (error) {
-      console.error('Error posting fragment: ', error);
-      alert('Error posting fragment. Please try again.');
+
+    // To check if the user has typed a fragment or selected from a file  
+    if (fragmentText !== '' && fragmentText !== 'Type Something here') {
+      try {
+        const user = await getUser();
+        if (!user) {
+          alert('User is not authenticated to post, please Login first!');
+          return;
+        }
+        const fragData = await postUserTypedFragment(user, fragmentText, fragType);
+        alert('Fragment creted and posted successfully!');
+        fragmentInput.value = '';
+        await updateUserFragments(user);
+        document.getElementById('fragLocation').value = apiUrl + '/' + fragData.location;
+      } catch (err) {
+        console.error('Error posting fragment: ', err);
+        alert('Error posting the typed fragment. Please try again.')
+      }
+    } 
+    // If th user has selected a fragment to post
+    else if (selectedFile.files.length > 0) {
+      const file = selectedFile.files[0];
+      try {
+        const user = await getUser();
+        if (!user) {
+          alert('User is not authenticated to post, please Login first!');
+          return;
+        }
+        const fragData = await postUserSelectedFragment(user, file, fragType);
+        alert('Fragment created and posted successfully!');
+        await updateUserFragments(user);
+        selectedFile.value = '';
+        document.getElementById('fragLocation').value = apiUrl + '/' + fragData.location;
+      } catch (err) {
+        console.error('Error posting fragment: ', err);
+        alert('Error posting selected file fragment. Please try again.')
+      }
+    } else {
+      alert('Please select a file to post or type something for the fragment');
     }
   };
 }

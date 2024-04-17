@@ -55,7 +55,8 @@ export async function getExpandedUserFragments(user, expand) {
   }
 }
 
-export async function postUserFragment(user, fragmentText, fragType) {
+// If the user decides to type the fragment and post
+export async function postUserTypedFragment(user, fragmentText, fragType) {
   console.log('Posting user fragment', fragmentText);
   try {
     const res = await fetch(`${apiUrl}/v1/fragments`, {
@@ -65,6 +66,35 @@ export async function postUserFragment(user, fragmentText, fragType) {
         "Content-Type": fragType, 
       },
       body: fragmentText,
+    });
+    if (!res.ok) {
+      throw new Error(`${res.status} ${res.statusText}`);
+    }
+    const data = await res.json();
+    const location = data.fragment.id;
+
+    // Consoling the locations and output
+    console.log("Posted fragment location: ", `${apiUrl}/v1/fragments/${location}`);
+    console.log('Successfully posted fragment data', { data });
+
+    return { data, location };
+  } catch (error) {
+    console.error('Unable to call POST /v1/fragment', { error });
+    throw error;
+  }
+}
+
+// If the user wants to select a file/image to post
+export async function postUserSelectedFragment(user, selectedFile, fragType) {
+  console.log('Posting user fragment', selectedFile);
+  try {
+    const res = await fetch(`${apiUrl}/v1/fragments`, {
+      method: 'POST',
+      headers: {
+        Authorization: user.authorizationHeaders().Authorization,
+        "Content-Type": fragType, 
+      },
+      body: selectedFile,
     });
     if (!res.ok) {
       throw new Error(`${res.status} ${res.statusText}`);

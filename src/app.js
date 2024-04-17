@@ -13,7 +13,7 @@ import { Auth, getUser } from './auth';
 
 // Modifications to src/app.js
 
-import { getUserFragments, postUserTypedFragment, getExpandedUserFragments, postUserSelectedFragment, getFragmentWithId } from './api';
+import { getUserFragments, postUserTypedFragment, getExpandedUserFragments, postUserSelectedFragment, getFragmentWithId, putUserFragment } from './api';
 
 async function updateUserFragments(user) {
   const userFragments = await getUserFragments(user);
@@ -130,7 +130,7 @@ async function init() {
           return;
         }
         const fragData = await postUserTypedFragment(user, fragmentText, fragType);
-        alert('Fragment creted and posted successfully!');
+        alert('Fragment created and posted successfully!');
         fragmentInput.value = '';
         await updateUserFragments(user);
         document.getElementById('fragLocation').value = apiUrl + '/' + fragData.location;
@@ -161,6 +161,37 @@ async function init() {
       alert('Please select a file to post or type something for the fragment');
     }
   };
+
+  // For PUT /v1/fragments/:id
+  const updateFragmentBtn = document.querySelector('#updateFragmentBtn');
+  updateFragmentBtn.onclick = async () => {
+    const updatedFragId = document.querySelector('#UpdatedFragId');
+    const updatedFragData = document.querySelector('#UpdatedFragData');
+    // Get the value of Id and Data
+    const updatedID = updatedFragId.value 
+    const updatedText = updatedFragData.value;
+    // To check if a fragment id is entered or not
+    if (!updatedID) {
+      alert('Please enter a fragment ID to update');
+      return;
+    }
+    // To check if the user is authenticated or not
+    try {
+      const user = await getUser();
+      if (!user) {
+        alert('User is not authenticated to post, please Login first!');
+        return;
+      }
+      const fragData = await putUserFragment(user, updatedText, updatedID);
+      alert('Fragment updated successfully!');
+      updatedFragId.value = '';
+      updatedFragData.value = '';
+      await updateUserFragments(user);
+    } catch (err) {
+      console.error('Error updating fragment: ', {err});
+      alert('Error updating user fragment. Please try again.')
+    }
+  }
 }
 
 // Wait for the DOM to be ready, then start the app

@@ -67,6 +67,22 @@
           <label for="fragLocation">Posted fragment Location</label>
           <input id="fragLocation" type="text" readonly placeholder="Generated after POST request is made">
         </p>
+
+        <!-- For PUT requests -->
+        <h3>Update an existing fragment</h3>
+        <p>
+          <div>
+            <label for="UpdatedFragId">Enter the Id to update the fragment data</label>
+            <input type="text" class="form-control" id="UpdatedFragId" placeholder="Type fragment id here">
+          </div>
+          <br />
+          <div>
+            <label for="UpdatedFragData">Enter the updated data</label>
+            <input type="text" class="form-control" id="UpdatedFragData" placeholder="Type the updated data here">
+          </div>
+          <br />
+          <button type="button" id="updateFragmentBtn" class="btn btn-outline-secondary">Submit</button>
+        </p>
     </section>
 
     <!-- This section is for authentication login/logout -->

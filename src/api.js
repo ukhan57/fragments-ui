@@ -143,3 +143,37 @@ export async function postUserSelectedFragment(user, selectedFile, fragType) {
     throw error;
   }
 }
+
+
+// PUT - Update the users existing fragment
+export async function putUserFragment(user, updatedText, updatedID) {
+  console.log('Updating user fragment: ', updatedText);
+  try {
+    const res = await fetch(`${apiUrl}/v1/fragments/${updatedID}`, {
+      method: 'PUT',
+      headers: {
+        Authorization: user.authorizationHeaders().Authorization,
+      },
+      body: updatedText,
+    });
+    if (!res.ok) {
+      throw new Error(`${res.status} ${res.statusText}`);
+    }
+    // Check the content type of the response
+    const contentType = res.headers.get('content-type');
+    if (contentType && contentType.includes('application/json')) {
+      // Parse and return JSON response
+      const data = await res.json();
+      console.log('Data: ', {data});
+      return data;
+    } else {
+      // Handle plain text response
+      const text = await res.text();
+      console.log('Data: ', {text});
+      return text;
+    }
+  } catch (error) {
+    console.error('Unable to call PUT /v1/fragment/:id', { error });
+    throw error;
+  }
+}

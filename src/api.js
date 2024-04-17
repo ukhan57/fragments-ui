@@ -146,7 +146,7 @@ export async function postUserSelectedFragment(user, selectedFile, fragType) {
 
 
 // PUT - Update the users existing fragment
-export async function putUserFragment(user, updatedText, updatedID) {
+export async function putUserFragment(user, updatedText, updatedID, updatedSize) {
   console.log('Updating user fragment: ', updatedText);
   try {
     const res = await fetch(`${apiUrl}/v1/fragments/${updatedID}`, {
@@ -155,6 +155,7 @@ export async function putUserFragment(user, updatedText, updatedID) {
         Authorization: user.authorizationHeaders().Authorization,
       },
       body: updatedText,
+      size: updatedSize,
     });
     if (!res.ok) {
       throw new Error(`${res.status} ${res.statusText}`);

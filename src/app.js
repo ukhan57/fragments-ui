@@ -170,6 +170,7 @@ async function init() {
     // Get the value of Id and Data
     const updatedID = updatedFragId.value 
     const updatedText = updatedFragData.value;
+    const updatedSize = updatedFragData.length;
     // To check if a fragment id is entered or not
     if (!updatedID) {
       alert('Please enter a fragment ID to update');
@@ -182,7 +183,7 @@ async function init() {
         alert('User is not authenticated to post, please Login first!');
         return;
       }
-      const fragData = await putUserFragment(user, updatedText, updatedID);
+      const fragData = await putUserFragment(user, updatedText, updatedID, updatedSize);
       alert('Fragment updated successfully!');
       updatedFragId.value = '';
       updatedFragData.value = '';
